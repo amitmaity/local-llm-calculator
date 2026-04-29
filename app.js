@@ -53,22 +53,33 @@ const MODEL_PRESETS = [
     ],
   },
   {
-    group: 'Hybrid Dense (Qwen 3.5)',
+    group: 'Hybrid Dense (Qwen 3.5/3.6)',
     models: [
       { id: 'qwen35-0.8b', name: 'Qwen3.5 0.8B',  params: 0.8, type: 'hybrid-dense', layers: 24, kvHeads: 2, headDim: 256, defaultSize: 0.6,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 16, linearValueDim: 128 },
       { id: 'qwen35-2b',   name: 'Qwen3.5 2B',    params: 2,   type: 'hybrid-dense', layers: 24, kvHeads: 2, headDim: 256, defaultSize: 1.5,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 16, linearValueDim: 128 },
       { id: 'qwen35-4b',   name: 'Qwen3.5 4B',    params: 4,   type: 'hybrid-dense', layers: 32, kvHeads: 4, headDim: 256, defaultSize: 2.8,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128 },
       { id: 'qwen35-9b',   name: 'Qwen3.5 9B',    params: 9,   type: 'hybrid-dense', layers: 32, kvHeads: 4, headDim: 256, defaultSize: 5.5,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128 },
       { id: 'qwen35-27b',  name: 'Qwen3.5 27B',   params: 27,  type: 'hybrid-dense', layers: 64, kvHeads: 4, headDim: 256, defaultSize: 16,   fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 48, linearValueDim: 128 },
+      { id: 'qwen36-27b',  name: 'Qwen3.6 27B',   params: 27,  type: 'hybrid-dense', layers: 64, kvHeads: 4, headDim: 256, defaultSize: 16,   fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 48, linearValueDim: 128 },
     ],
   },
   {
     group: 'Hybrid MoE',
     models: [
       { id: 'qwen35-35b-a3b',   name: 'Qwen3.5 35B-A3B',          params: 35,  type: 'hybrid-moe', layers: 40, kvHeads: 2, headDim: 256, defaultSize: 20,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128, totalExperts: 256, activeExperts: 9,  attnFraction: 0.04 },
+      { id: 'qwen36-35b-a3b',   name: 'Qwen3.6 35B-A3B',          params: 35,  type: 'hybrid-moe', layers: 40, kvHeads: 2, headDim: 256, defaultSize: 20,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128, totalExperts: 256, activeExperts: 9,  attnFraction: 0.04 },
       { id: 'qwen35-122b-a10b', name: 'Qwen3.5 122B-A10B',        params: 122, type: 'hybrid-moe', layers: 48, kvHeads: 2, headDim: 256, defaultSize: 70,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 64, linearValueDim: 128, totalExperts: 256, activeExperts: 9,  attnFraction: 0.04 },
       { id: 'qwen35-397b-a17b', name: 'Qwen3.5 397B-A17B',        params: 397, type: 'hybrid-moe', layers: 60, kvHeads: 2, headDim: 256, defaultSize: 225, fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 64, linearValueDim: 128, totalExperts: 512, activeExperts: 11, attnFraction: 0.03 },
       { id: 'qwen3-coder-next', name: 'Qwen3-Coder-Next 80B-A3B', params: 80,  type: 'hybrid-moe', layers: 48, kvHeads: 2, headDim: 256, defaultSize: 46,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128, totalExperts: 512, activeExperts: 10, attnFraction: 0.04 },
+    ],
+  },
+  {
+    group: 'Gemma 4',
+    models: [
+      { id: 'gemma4-e2b',      name: 'Gemma 4 E2B',      params: 5.1,  type: 'sliding-dense', layers: 35, kvHeads: 1, headDim: 512, defaultSize: 3.2,  slidingWindow: 512,  globalAttnInterval: 5, slidingKvHeads: 1,  slidingHeadDim: 256, globalKvHeads: 1, globalHeadDim: 512, kvSharedLayers: 20 },
+      { id: 'gemma4-e4b',      name: 'Gemma 4 E4B',      params: 8,    type: 'sliding-dense', layers: 42, kvHeads: 2, headDim: 512, defaultSize: 5.0,  slidingWindow: 512,  globalAttnInterval: 6, slidingKvHeads: 2,  slidingHeadDim: 256, globalKvHeads: 2, globalHeadDim: 512, kvSharedLayers: 18 },
+      { id: 'gemma4-31b',      name: 'Gemma 4 31B',      params: 30.7, type: 'sliding-dense', layers: 60, kvHeads: 4, headDim: 512, defaultSize: 17.4, slidingWindow: 1024, globalAttnInterval: 6, slidingKvHeads: 16, slidingHeadDim: 256, globalKvHeads: 4, globalHeadDim: 512, kvSharedLayers: 0  },
+      { id: 'gemma4-26b-a4b',  name: 'Gemma 4 26B-A4B',  params: 26,   type: 'sliding-moe',   layers: 30, kvHeads: 2, headDim: 512, defaultSize: 15.6, slidingWindow: 1024, globalAttnInterval: 6, slidingKvHeads: 8,  slidingHeadDim: 256, globalKvHeads: 2, globalHeadDim: 512, kvSharedLayers: 0, totalExperts: 128, activeExperts: 8, attnFraction: 0.05 },
     ],
   },
 ];
@@ -97,6 +108,16 @@ const el = {
   linearValueHeads: $('linear-value-heads'),
   linearValueDim: $('linear-value-dim'),
   hybridNote:     $('hybrid-note'),
+  slidingSection: $('sliding-section'),
+  slidingWindow:  $('sliding-window'),
+  globalAttnInterval: $('global-attn-interval'),
+  globalAttnLayers: $('global-attn-layers'),
+  slidingKvHeads: $('sliding-kv-heads'),
+  slidingHeadDim: $('sliding-head-dim'),
+  globalKvHeads:  $('global-kv-heads'),
+  globalHeadDim:  $('global-head-dim'),
+  kvSharedLayers: $('kv-shared-layers'),
+  slidingNote:    $('sliding-note'),
   moeSection:     $('moe-section'),
   totalExperts:   $('total-experts'),
   activeExperts:  $('active-experts'),
@@ -149,6 +170,18 @@ function findPreset(id) {
   return null;
 }
 
+function isHybridType(type) {
+  return type === 'hybrid-dense' || type === 'hybrid-moe';
+}
+
+function isMoeType(type) {
+  return type === 'moe' || type === 'hybrid-moe' || type === 'sliding-moe';
+}
+
+function isSlidingType(type) {
+  return type === 'sliding-dense' || type === 'sliding-moe';
+}
+
 function applyPreset(id) {
   const p = findPreset(id);
   if (!p) return;
@@ -160,14 +193,25 @@ function applyPreset(id) {
   el.headDim.value     = p.headDim;
   el.modelSize.value   = p.defaultSize;
 
-  const isHybrid = p.type === 'hybrid-dense' || p.type === 'hybrid-moe';
-  const isMoe    = p.type === 'moe'          || p.type === 'hybrid-moe';
+  const isHybrid = isHybridType(p.type);
+  const isMoe    = isMoeType(p.type);
+  const isSliding = isSlidingType(p.type);
 
   if (isHybrid) {
     el.fullAttnInterval.value = p.fullAttnInterval;
     el.linearKeyDim.value = p.linearKeyDim;
     el.linearValueHeads.value = p.linearValueHeads;
     el.linearValueDim.value = p.linearValueDim;
+  }
+
+  if (isSliding) {
+    el.slidingWindow.value = p.slidingWindow;
+    el.globalAttnInterval.value = p.globalAttnInterval;
+    el.slidingKvHeads.value = p.slidingKvHeads;
+    el.slidingHeadDim.value = p.slidingHeadDim;
+    el.globalKvHeads.value = p.globalKvHeads;
+    el.globalHeadDim.value = p.globalHeadDim;
+    el.kvSharedLayers.value = p.kvSharedLayers || 0;
   }
 
   if (isMoe) {
@@ -192,14 +236,19 @@ function applyPreset(id) {
 
 function updateVisibility() {
   const t = el.modelType.value;
-  const isHybrid = t === 'hybrid-dense' || t === 'hybrid-moe';
-  const isMoe    = t === 'moe'          || t === 'hybrid-moe';
+  const isHybrid = isHybridType(t);
+  const isMoe    = isMoeType(t);
+  const isSliding = isSlidingType(t);
 
   el.hybridSection.hidden = !isHybrid;
+  el.slidingSection.hidden = !isSliding;
   el.moeSection.hidden    = !isMoe;
 
   if (isHybrid) {
     updateHybridDerivedFields();
+  }
+  if (isSliding) {
+    updateSlidingDerivedFields();
   }
 
   updateDerivedNotes();
@@ -216,6 +265,21 @@ function updateHybridDerivedFields() {
   el.hybridNote.textContent = `Assumes an evenly spaced layout: every ${interval}th layer is full attention (${full} KV-cache layers, ${linear} linear-state layers).`;
 }
 
+function updateSlidingDerivedFields() {
+  const layers = int(el.numLayers) || 1;
+  const interval = Math.min(layers, Math.max(1, int(el.globalAttnInterval) || 1));
+  const global = Math.max(1, Math.floor(layers / interval));
+  const sliding = Math.max(0, layers - global);
+  const shared = Math.min(layers - 1, Math.max(0, int(el.kvSharedLayers) || 0));
+  const unique = Math.max(1, layers - shared);
+  const window = Math.max(1, int(el.slidingWindow) || 1);
+
+  el.globalAttnInterval.value = interval;
+  el.globalAttnLayers.value = global;
+  el.kvSharedLayers.value = shared;
+  el.slidingNote.textContent = `Uses ${sliding} sliding-window layers capped at ${window.toLocaleString()} tokens and ${global} global layers. Counts ${unique} unique KV layers after sharing.`;
+}
+
 function updateDerivedNotes() {
   const params = num(el.totalParams);
   const size = num(el.modelSize);
@@ -226,7 +290,7 @@ function updateDerivedNotes() {
     el.paramsNote.textContent = '';
   }
 
-  const isMoe = el.modelType.value === 'moe' || el.modelType.value === 'hybrid-moe';
+  const isMoe = isMoeType(el.modelType.value);
   if (isMoe) {
     const active = int(el.activeExperts) || 0;
     const total = int(el.totalExperts) || 0;
@@ -271,6 +335,66 @@ function updateExpertsLabel() {
 // Calculation Engine
 // ============================================================
 
+function countAttentionLayers(layerCount, interval) {
+  const global = Math.max(0, Math.floor(layerCount / interval));
+  return {
+    global,
+    sliding: Math.max(0, layerCount - global),
+  };
+}
+
+function applyKvSharingToMix(mix, totalMix, sharedLayers) {
+  const sharedSliding = Math.min(sharedLayers, totalMix.sliding);
+  const slidingRatio = totalMix.sliding > 0
+    ? Math.max(0, totalMix.sliding - sharedSliding) / totalMix.sliding
+    : 1;
+  const sharedGlobal = Math.max(0, sharedLayers - sharedSliding);
+  const globalRatio = totalMix.global > 0
+    ? Math.max(0, totalMix.global - sharedGlobal) / totalMix.global
+    : 1;
+
+  return {
+    sliding: Math.min(mix.sliding, Math.round(mix.sliding * slidingRatio)),
+    global: Math.min(mix.global, Math.round(mix.global * globalRatio)),
+  };
+}
+
+function kvProfile(globalLayers, slidingLayers, globalBytesPerLayer, slidingBytesPerLayer, slidingWindow) {
+  return {
+    globalBytesPerToken: globalLayers * globalBytesPerLayer,
+    slidingBytesPerToken: slidingLayers * slidingBytesPerLayer,
+    slidingWindow,
+  };
+}
+
+function maxContextForProfile(memoryGB, profile) {
+  const budget = memoryGB * GB;
+  const globalBpt = profile.globalBytesPerToken;
+  const slidingBpt = profile.slidingBytesPerToken;
+  const totalBpt = globalBpt + slidingBpt;
+
+  if (totalBpt <= 0) return Infinity;
+  if (budget <= 0) return 0;
+  if (slidingBpt <= 0) return Math.floor(budget / globalBpt);
+
+  const window = Math.max(1, profile.slidingWindow);
+  const withinWindow = Math.floor(budget / totalBpt);
+  if (withinWindow <= window) return withinWindow;
+
+  const cappedSlidingBytes = slidingBpt * window;
+  const remaining = budget - cappedSlidingBytes;
+  if (remaining <= 0) return Math.floor(budget / totalBpt);
+  if (globalBpt <= 0) return Infinity;
+  return Math.floor(remaining / globalBpt);
+}
+
+function kvUsageForContextGB(profile, ctx) {
+  if (!Number.isFinite(ctx)) return Infinity;
+  const slidingCtx = Math.min(ctx, Math.max(1, profile.slidingWindow));
+  const bytes = (profile.globalBytesPerToken * ctx) + (profile.slidingBytesPerToken * slidingCtx);
+  return bytes / GB;
+}
+
 function calculate() {
   const vram       = num(el.vram);
   const ram        = num(el.ram);
@@ -284,8 +408,9 @@ function calculate() {
   const vramOH     = (num(el.vramOverhead) || 0) / 1024;
   const ramOH      = (num(el.ramOverhead)  || 0) / 1024;
 
-  const isMoe    = modelType === 'moe'          || modelType === 'hybrid-moe';
-  const isHybrid = modelType === 'hybrid-dense'  || modelType === 'hybrid-moe';
+  const isMoe    = isMoeType(modelType);
+  const isHybrid = isHybridType(modelType);
+  const isSliding = isSlidingType(modelType);
   const kvBytes  = KV_QUANT_BYTES[kvQuant] || 2;
 
   // Bytes of KV cache per token per full-attention layer
@@ -309,7 +434,7 @@ function calculate() {
 
   if (isMoe) {
     const totalExp     = int(el.totalExperts) || 1;
-    const expOnGpu     = int(el.expertsGpu)   || totalExp;
+    const expOnGpu     = Math.min(totalExp, Math.max(0, int(el.expertsGpu)));
     const attnFrac     = num(el.attnFraction) || 0.05;
     const expFrac      = 1 - attnFrac;
     const perLayer     = fileSize * numLayers / (numLayers + 1) / numLayers;
@@ -323,13 +448,36 @@ function calculate() {
   }
 
   // KV-cache layers on GPU vs CPU
-  let kvGpuLayers, kvCpuLayers;
-  if (isHybrid && fullAttnInterval > 1) {
+  let kvGpuLayers, kvCpuLayers, gpuKvProfile, cpuKvProfile;
+  if (isSliding) {
+    const globalAttnInterval = Math.min(numLayers, Math.max(1, int(el.globalAttnInterval) || 1));
+    const slidingWindow = Math.max(1, int(el.slidingWindow) || 1);
+    const sharedLayers = Math.min(numLayers - 1, Math.max(0, int(el.kvSharedLayers) || 0));
+    const totalMix = countAttentionLayers(numLayers, globalAttnInterval);
+    const gpuMixRaw = countAttentionLayers(gpuModelLayers, globalAttnInterval);
+    const cpuMixRaw = {
+      sliding: Math.max(0, totalMix.sliding - gpuMixRaw.sliding),
+      global: Math.max(0, totalMix.global - gpuMixRaw.global),
+    };
+    const gpuMix = applyKvSharingToMix(gpuMixRaw, totalMix, sharedLayers);
+    const cpuMix = applyKvSharingToMix(cpuMixRaw, totalMix, sharedLayers);
+    const slidingBytesPerLayer = 2 * (int(el.slidingKvHeads) || 1) * (int(el.slidingHeadDim) || 256) * kvBytes;
+    const globalBytesPerLayer = 2 * (int(el.globalKvHeads) || 1) * (int(el.globalHeadDim) || 512) * kvBytes;
+
+    kvGpuLayers = gpuMix.sliding + gpuMix.global;
+    kvCpuLayers = cpuMix.sliding + cpuMix.global;
+    gpuKvProfile = kvProfile(gpuMix.global, gpuMix.sliding, globalBytesPerLayer, slidingBytesPerLayer, slidingWindow);
+    cpuKvProfile = kvProfile(cpuMix.global, cpuMix.sliding, globalBytesPerLayer, slidingBytesPerLayer, slidingWindow);
+  } else if (isHybrid && fullAttnInterval > 1) {
     kvGpuLayers = Math.floor(gpuModelLayers / fullAttnInterval);
     kvCpuLayers = fullAttnLayers - kvGpuLayers;
+    gpuKvProfile = kvProfile(kvGpuLayers, 0, kvPerTokenPerLayer, 0, 1);
+    cpuKvProfile = kvProfile(kvCpuLayers, 0, kvPerTokenPerLayer, 0, 1);
   } else {
     kvGpuLayers = gpuModelLayers;
     kvCpuLayers = cpuModelLayers;
+    gpuKvProfile = kvProfile(kvGpuLayers, 0, kvPerTokenPerLayer, 0, 1);
+    cpuKvProfile = kvProfile(kvCpuLayers, 0, kvPerTokenPerLayer, 0, 1);
   }
 
   // Hybrid linear-attention layers keep a fixed-size recurrent state per layer.
@@ -349,18 +497,12 @@ function calculate() {
   const availVram = Math.max(0, vram - gpuModelMem - effectiveVramOH);
   const availRam  = Math.max(0, ram  - cpuModelMem - effectiveRamOH);
 
-  // KV bytes per token on GPU / CPU side
-  const kvBytesPerTokenGpu = kvPerTokenPerLayer * kvGpuLayers;
-  const kvBytesPerTokenCpu = kvPerTokenPerLayer * kvCpuLayers;
-
   // Max context from each constraint
-  let maxVram = Infinity, maxRam = Infinity;
-  if (kvGpuLayers > 0 && kvBytesPerTokenGpu > 0)
-    maxVram = Math.floor((availVram * GB) / kvBytesPerTokenGpu);
-  if (kvCpuLayers > 0 && kvBytesPerTokenCpu > 0)
-    maxRam = Math.floor((availRam * GB) / kvBytesPerTokenCpu);
+  const maxVram = maxContextForProfile(availVram, gpuKvProfile);
+  const maxRam = maxContextForProfile(availRam, cpuKvProfile);
 
   let maxCtx = Math.min(maxVram, maxRam);
+  if (!Number.isFinite(maxCtx)) maxCtx = 0;
   maxCtx = Math.max(0, Math.floor(maxCtx / 256) * 256);
 
   // Bottleneck
@@ -384,8 +526,8 @@ function calculate() {
   }
 
   // Actual KV usage at max context (GB)
-  const kvVramUsed = (kvBytesPerTokenGpu * maxCtx) / GB;
-  const kvRamUsed  = (kvBytesPerTokenCpu * maxCtx) / GB;
+  const kvVramUsed = kvUsageForContextGB(gpuKvProfile, maxCtx);
+  const kvRamUsed  = kvUsageForContextGB(cpuKvProfile, maxCtx);
 
   const results = {
     maxCtx,
@@ -412,7 +554,7 @@ function calculate() {
   };
 
   renderResults(results);
-  renderReverse(kvBytesPerTokenGpu, kvBytesPerTokenCpu, gpuModelMem, cpuModelMem, effectiveVramOH, effectiveRamOH, vram, ram);
+  renderReverse(gpuKvProfile, cpuKvProfile, gpuModelMem, cpuModelMem, effectiveVramOH, effectiveRamOH, vram, ram);
   renderCommand(results);
 }
 
@@ -420,17 +562,17 @@ function calculate() {
 // Reverse Mode
 // ============================================================
 
-function renderReverse(kvBpTGpu, kvBpTCpu, gpuMem, cpuMem, vramOH, ramOH, vram, ram) {
+function renderReverse(gpuKvProfile, cpuKvProfile, gpuMem, cpuMem, vramOH, ramOH, vram, ram) {
   const ctx = parseInt(el.desiredCtx.value) || 0;
   if (ctx <= 0) { el.reverseSection.hidden = true; return; }
 
   el.reverseSection.hidden = false;
-  const kvVram = (kvBpTGpu * ctx) / GB;
-  const kvRam  = (kvBpTCpu * ctx) / GB;
+  const kvVram = kvUsageForContextGB(gpuKvProfile, ctx);
+  const kvRam  = kvUsageForContextGB(cpuKvProfile, ctx);
   const needVram = gpuMem + kvVram + vramOH;
   const needRam  = cpuMem + kvRam  + ramOH;
-  const fitsVram = needVram <= vram || kvBpTGpu === 0;
-  const fitsRam  = needRam  <= ram  || kvBpTCpu === 0;
+  const fitsVram = needVram <= vram || (gpuKvProfile.globalBytesPerToken + gpuKvProfile.slidingBytesPerToken) === 0;
+  const fitsRam  = needRam  <= ram  || (cpuKvProfile.globalBytesPerToken + cpuKvProfile.slidingBytesPerToken) === 0;
   const fits = fitsVram && fitsRam;
 
   el.reverseResult.innerHTML =
@@ -549,6 +691,7 @@ function bindEvents() {
   // Layer count changes slider range
   el.numLayers.addEventListener('input', () => {
     updateHybridDerivedFields();
+    updateSlidingDerivedFields();
     updateDerivedNotes();
     updateGpuSlider();
     calculate();
@@ -561,6 +704,17 @@ function bindEvents() {
     calculate();
   });
   [el.linearKeyDim, el.linearValueHeads, el.linearValueDim].forEach((field) => {
+    field.addEventListener('input', calculate);
+  });
+
+  // Sliding/global attention layout updates
+  [el.slidingWindow, el.globalAttnInterval, el.kvSharedLayers].forEach((field) => {
+    field.addEventListener('input', () => {
+      updateSlidingDerivedFields();
+      calculate();
+    });
+  });
+  [el.slidingKvHeads, el.slidingHeadDim, el.globalKvHeads, el.globalHeadDim].forEach((field) => {
     field.addEventListener('input', calculate);
   });
 

@@ -59,6 +59,8 @@
           <option value="moe">MoE</option>
           <option value="hybrid-dense">Hybrid Dense</option>
           <option value="hybrid-moe">Hybrid MoE</option>
+          <option value="sliding-dense">Sliding Dense</option>
+          <option value="sliding-moe">Sliding MoE</option>
         </select>
       </div>
       <div class="form-row">
@@ -98,7 +100,7 @@
       <div class="form-row">
         <div class="form-group">
           <label for="full-attn-interval">Full Attention Interval
-            <span class="info" title="Assumes an evenly spaced pattern: every Nth layer is full attention, the rest are linear-attention layers. Qwen3.5 uses 4.">?</span>
+            <span class="info" title="Assumes an evenly spaced pattern: every Nth layer is full attention, the rest are linear-attention layers. Qwen3.5 and Qwen3.6 use 4.">?</span>
           </label>
           <input type="number" id="full-attn-interval" value="4" min="1" step="1">
         </div>
@@ -122,6 +124,60 @@
         <input type="number" id="linear-value-dim" value="128" min="1" step="1">
         <p class="field-note" id="hybrid-note"></p>
       </div>
+    </section>
+
+    <!-- Sliding / Global Attention -->
+    <section class="card" id="sliding-section" hidden>
+      <h2>Sliding / Global Attention
+        <span class="info" title="Gemma-style models mix capped sliding-window attention with periodic full-context global attention layers.">?</span>
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sliding-window">Sliding Window
+            <span class="info" title="Tokens retained by each sliding-window attention layer.">?</span>
+          </label>
+          <input type="number" id="sliding-window" value="1024" min="1" step="1">
+        </div>
+        <div class="form-group">
+          <label for="global-attn-interval">Global Attention Interval
+            <span class="info" title="Assumes an evenly spaced pattern: every Nth layer is full-context global attention.">?</span>
+          </label>
+          <input type="number" id="global-attn-interval" value="6" min="1" step="1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="global-attn-layers">Global Attention Layers</label>
+          <input type="number" id="global-attn-layers" value="10" min="1" step="1" readonly>
+        </div>
+        <div class="form-group">
+          <label for="kv-shared-layers">KV Shared Layers
+            <span class="info" title="Number of decoder layers that reuse another layer's KV cache instead of owning a unique cache.">?</span>
+          </label>
+          <input type="number" id="kv-shared-layers" value="0" min="0" step="1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sliding-kv-heads">Sliding KV Heads</label>
+          <input type="number" id="sliding-kv-heads" value="16" min="1" step="1">
+        </div>
+        <div class="form-group">
+          <label for="sliding-head-dim">Sliding Head Dim</label>
+          <input type="number" id="sliding-head-dim" value="256" min="1" step="1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="global-kv-heads">Global KV Heads</label>
+          <input type="number" id="global-kv-heads" value="4" min="1" step="1">
+        </div>
+        <div class="form-group">
+          <label for="global-head-dim">Global Head Dim</label>
+          <input type="number" id="global-head-dim" value="512" min="1" step="1">
+        </div>
+      </div>
+      <p class="field-note" id="sliding-note"></p>
     </section>
 
     <!-- MoE Configuration -->

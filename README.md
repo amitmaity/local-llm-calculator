@@ -6,8 +6,8 @@ Live app: [amitmaity.github.io/local-llm-calculator](https://amitmaity.github.io
 
 ## Features
 - Calculates maximum usable context size from VRAM and RAM constraints.
-- Supports dense, MoE, hybrid-dense, and hybrid-MoE model layouts.
-- Includes presets for Llama, Qwen 2.5, Qwen 3.5, Qwen3-Coder-Next, Mixtral, Gemma 2, Phi-3, Command-R, and DeepSeek.
+- Supports dense, MoE, hybrid-dense, hybrid-MoE, sliding-dense, and sliding-MoE model layouts.
+- Includes presets for Llama, Qwen 2.5, Qwen 3.5, Qwen 3.6, Qwen3-Coder-Next, Mixtral, Gemma 2, Gemma 4, Phi-3, Command-R, and DeepSeek.
 - Handles `llama.cpp` style GPU layer offloading with `-ngl`.
 - Supports KV cache quant types: `f16`, `f32`, `q8_0`, `q4_0`, `q4_1`, `q5_0`, `q5_1`.
 - Includes reverse mode to estimate memory usage for a target context size.
@@ -25,11 +25,13 @@ The calculator lets you configure:
 - KV cache quantization
 - MoE expert count and expert offload
 - Hybrid attention layout for Qwen-style models
+- Sliding/global attention layout for Gemma-style models
 
 ## Notes
 - Results are estimates, not exact runtime guarantees.
 - Actual memory usage depends on `llama.cpp` version, runtime buffers, batch size, and system configuration.
 - For hybrid Qwen-style models, the calculator assumes an evenly spaced full-attention pattern and also includes fixed linear-attention state overhead.
+- For Gemma-style sliding/global models, sliding-window KV memory is capped by the configured window while global attention layers scale with full context length.
 - File size is the primary weight-memory driver; parameter count is shown as helpful metadata.
 
 ## Run Locally

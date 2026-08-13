@@ -52,6 +52,17 @@ const MODEL_PRESETS = [
       { id: 'phi4-mini',     name: 'Phi-4 Mini 3.8B',     params: 3.8,  type: 'dense', layers: 32,  kvHeads: 8,  headDim: 128, defaultSize: 2.5  },
       { id: 'phi3-medium',   name: 'Phi-3 Medium 14B',    params: 14,   type: 'dense', layers: 40,  kvHeads: 8,  headDim: 128, defaultSize: 8.3  },
       { id: 'commandr-35b',  name: 'Command-R 35B',       params: 35,   type: 'dense', layers: 40,  kvHeads: 8,  headDim: 128, defaultSize: 20   },
+      { id: 'falcon3-1b',    name: 'Falcon 3 1B',         params: 1,    type: 'dense', layers: 18,  kvHeads: 4,  headDim: 256, defaultSize: 1.1  },
+      { id: 'falcon3-3b',    name: 'Falcon 3 3B',         params: 3,    type: 'dense', layers: 22,  kvHeads: 4,  headDim: 256, defaultSize: 2.0  },
+      { id: 'falcon3-7b',    name: 'Falcon 3 7B',         params: 7,    type: 'dense', layers: 28,  kvHeads: 4,  headDim: 256, defaultSize: 4.4  },
+      { id: 'falcon3-10b',   name: 'Falcon 3 10B',        params: 10,   type: 'dense', layers: 40,  kvHeads: 4,  headDim: 256, defaultSize: 6.0  },
+      { id: 'nanbeige4.1-3b', name: 'Nanbeige4.1 3B',     params: 3,    type: 'dense', layers: 32,  kvHeads: 4,  headDim: 128, defaultSize: 2.3  },
+      { id: 'olmo2-1b',      name: 'OLMo 2 1B',           params: 1,    type: 'dense', layers: 16,  kvHeads: 16, headDim: 128, defaultSize: 0.9  },
+      { id: 'olmo2-7b',      name: 'OLMo 2 7B',           params: 7,    type: 'dense', layers: 32,  kvHeads: 32, headDim: 128, defaultSize: 4.4  },
+      { id: 'lfm2-1.2b',     name: 'LFM2 1.2B',           params: 1.2,  type: 'dense', layers: 16,  kvHeads: 8,  headDim: 64,  defaultSize: 0.73 },
+      { id: 'lfm2-2.6b',     name: 'LFM2 2.6B',           params: 2.6,  type: 'dense', layers: 30,  kvHeads: 8,  headDim: 64,  defaultSize: 1.7  },
+      { id: 'twil-lm1.7b',   name: 'TwiL-LM 1.7B',        params: 1.7,  type: 'dense', layers: 24,  kvHeads: 32, headDim: 64,  defaultSize: 1.0  },
+      { id: 'twil-lm3b',     name: 'TwiL-LM 3B',          params: 3,    type: 'dense', layers: 36,  kvHeads: 4,  headDim: 128, defaultSize: 2.0  },
     ],
   },
   {
@@ -93,6 +104,26 @@ const MODEL_PRESETS = [
       { id: 'gemma3-4b',   name: 'Gemma 3 4B',   params: 4,    type: 'sliding-dense', layers: 34, kvHeads: 4, headDim: 256, defaultSize: 2.5,  slidingWindow: 1024, globalAttnInterval: 6, slidingKvHeads: 4, slidingHeadDim: 256, globalKvHeads: 4, globalHeadDim: 256, kvSharedLayers: 0 },
       { id: 'gemma3-12b',  name: 'Gemma 3 12B',  params: 12,   type: 'sliding-dense', layers: 48, kvHeads: 8, headDim: 256, defaultSize: 7.5,  slidingWindow: 1024, globalAttnInterval: 6, slidingKvHeads: 8, slidingHeadDim: 256, globalKvHeads: 8, globalHeadDim: 256, kvSharedLayers: 0 },
       { id: 'gemma3-27b',  name: 'Gemma 3 27B',  params: 27,   type: 'sliding-dense', layers: 62, kvHeads: 16, headDim: 128, defaultSize: 16,   slidingWindow: 1024, globalAttnInterval: 6, slidingKvHeads: 16, slidingHeadDim: 128, globalKvHeads: 16, globalHeadDim: 128, kvSharedLayers: 0 },
+    ],
+  },
+  {
+    group: 'Ministral 3',
+    models: [
+      { id: 'ministral3-3b',  name: 'Ministral 3 3B',  params: 3,  type: 'dense', layers: 26, kvHeads: 8, headDim: 128, defaultSize: 2.0 },
+      { id: 'ministral3-8b',  name: 'Ministral 3 8B',  params: 8,  type: 'dense', layers: 34, kvHeads: 8, headDim: 128, defaultSize: 6.5 },
+      { id: 'ministral3-14b', name: 'Ministral 3 14B', params: 14, type: 'dense', layers: 40, kvHeads: 8, headDim: 128, defaultSize: 9.5 },
+    ],
+  },
+  {
+    group: 'Granite',
+    models: [
+      { id: 'granite-swash-3b', name: 'Granite SWASH 3B-a600M', params: 3.02, type: 'sliding-moe', layers: 28, kvHeads: 4, headDim: 64, defaultSize: 1.8, slidingWindow: 128, globalAttnInterval: 4, slidingKvHeads: 4, slidingHeadDim: 64, globalKvHeads: 4, globalHeadDim: 64, kvSharedLayers: 0, totalExperts: 48, activeExperts: 4, attnFraction: 0.05 },
+    ],
+  },
+  {
+    group: 'Muse Glimmer',
+    models: [
+      { id: 'muse-glimmer-30b', name: 'Muse Glimmer 30B', params: 29.6, type: 'sliding-dense', layers: 52, kvHeads: 2, headDim: 128, defaultSize: 16.8, slidingWindow: 2048, globalAttnInterval: 4, slidingKvHeads: 2, slidingHeadDim: 128, globalKvHeads: 2, globalHeadDim: 128, kvSharedLayers: 0 },
     ],
   },
   {

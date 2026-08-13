@@ -96,6 +96,12 @@ const MODEL_PRESETS = [
     ],
   },
   {
+    group: 'Muse Glimmer',
+    models: [
+      { id: 'muse-glimmer-30b', name: 'Muse Glimmer 30B', params: 29.6, type: 'sliding-dense', layers: 52, kvHeads: 2, headDim: 128, defaultSize: 16.8, slidingWindow: 2048, globalAttnInterval: 4, slidingKvHeads: 2, slidingHeadDim: 128, globalKvHeads: 2, globalHeadDim: 128, kvSharedLayers: 0 },
+    ],
+  },
+  {
     group: 'Gemma 4',
     models: [
       { id: 'gemma4-e2b',      name: 'Gemma 4 E2B',          params: 5.1,  type: 'sliding-dense', layers: 35, kvHeads: 1, headDim: 512, defaultSize: 3.2,  slidingWindow: 512,  globalAttnInterval: 5, slidingKvHeads: 1,  slidingHeadDim: 256, globalKvHeads: 1, globalHeadDim: 512, kvSharedLayers: 20 },

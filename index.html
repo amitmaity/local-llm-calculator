@@ -3,14 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM Context Size Calculator</title>
+  <title>Local AI Memory Calculator</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="mode-llm">
 
 <header>
-  <h1>LLM Context Size Calculator</h1>
-  <p class="subtitle">Estimate the maximum context window for running quantized models locally with llama.cpp</p>
+  <h1 id="page-title">LLM Context Size Calculator</h1>
+  <p class="subtitle" id="page-subtitle">Estimate the maximum context window for running quantized models locally with llama.cpp</p>
+  <div class="mode-switch" role="tablist" aria-label="Calculator mode">
+    <button type="button" data-mode="llm" class="active" role="tab" aria-selected="true">LLM</button>
+    <button type="button" data-mode="image" role="tab" aria-selected="false">Image</button>
+    <button type="button" data-mode="video" role="tab" aria-selected="false">Video</button>
+  </div>
 </header>
 
 <main class="layout">
@@ -52,7 +57,7 @@
         <label for="model-preset">Model Preset</label>
         <select id="model-preset"></select>
       </div>
-      <div class="form-group">
+      <div class="form-group llm-only">
         <label for="model-type">Model Type</label>
         <select id="model-type">
           <option value="dense">Dense</option>
@@ -69,12 +74,18 @@
           <input type="number" id="total-params" value="8" min="0" step="0.1">
           <p class="field-note" id="params-note"></p>
         </div>
-        <div class="form-group">
+        <div class="form-group llm-only">
           <label for="num-layers">Layers</label>
           <input type="number" id="num-layers" value="32" min="1" step="1">
         </div>
+        <div class="form-group gen-only">
+          <label for="dit-size">DiT / UNet (GB fp16)
+            <span class="info" title="fp16 size of the diffusion transformer or UNet. Precision below scales this value.">?</span>
+          </label>
+          <input type="number" id="dit-size" value="23.8" min="0" step="0.1">
+        </div>
       </div>
-      <div class="form-row">
+      <div class="form-row llm-only">
         <div class="form-group">
           <label for="kv-heads">KV Heads</label>
           <input type="number" id="kv-heads" value="8" min="1" step="1">
@@ -84,16 +95,30 @@
           <input type="number" id="head-dim" value="128" min="1" step="1">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group llm-only">
         <label for="model-size">Model File Size (GB)
           <span class="info" title="Size of the GGUF file on disk. Depends on the quantization format used.">?</span>
         </label>
         <input type="number" id="model-size" value="4.9" min="0" step="0.1">
       </div>
+      <div class="form-row gen-only">
+        <div class="form-group">
+          <label for="te-size">Text Encoder (GB fp16)
+            <span class="info" title="CLIP, T5, UMT5, or similar text-encoder weights at fp16.">?</span>
+          </label>
+          <input type="number" id="te-size" value="9.75" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="vae-size">VAE (GB fp16)
+            <span class="info" title="VAE encoder/decoder weights. Usually kept at fp16 even when the DiT is quantized.">?</span>
+          </label>
+          <input type="number" id="vae-size" value="0.32" min="0" step="0.01">
+        </div>
+      </div>
     </section>
 
     <!-- Hybrid Architecture -->
-    <section class="card" id="hybrid-section" hidden>
+    <section class="card llm-only" id="hybrid-section" hidden>
       <h2>Hybrid Attention
         <span class="info" title="Models with mixed linear (DeltaNet) and full attention layers. Only full attention layers use context-dependent KV cache.">?</span>
       </h2>
@@ -127,7 +152,7 @@
     </section>
 
     <!-- Sliding / Global Attention -->
-    <section class="card" id="sliding-section" hidden>
+    <section class="card llm-only" id="sliding-section" hidden>
       <h2>Sliding / Global Attention
         <span class="info" title="Gemma-style models mix capped sliding-window attention with periodic full-context global attention layers.">?</span>
       </h2>
@@ -181,7 +206,7 @@
     </section>
 
     <!-- MoE Configuration -->
-    <section class="card" id="moe-section" hidden>
+    <section class="card llm-only" id="moe-section" hidden>
       <h2>MoE Configuration</h2>
       <div class="form-row">
         <div class="form-group">
@@ -209,8 +234,39 @@
       </div>
     </section>
 
+    <!-- Gen architecture -->
+    <section class="card gen-only" id="gen-arch-section">
+      <h2>Latent Layout
+        <span class="info" title="VAE compression and patch size determine how many latent tokens the DiT attends over. Activations scale with token count relative to the preset's reference resolution.">?</span>
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="spatial-compression">Spatial Compression</label>
+          <input type="number" id="spatial-compression" value="8" min="1" step="1">
+        </div>
+        <div class="form-group">
+          <label for="patch-size">Patch Size</label>
+          <input type="number" id="patch-size" value="2" min="1" step="1">
+        </div>
+      </div>
+      <div class="form-group video-only">
+        <label for="temporal-compression">Temporal Compression</label>
+        <input type="number" id="temporal-compression" value="4" min="1" step="1">
+      </div>
+      <div class="form-group">
+        <label for="activation-base">Activation Baseline (GB)
+          <span class="info" title="Calibrated latent/activation VRAM at the preset's reference resolution and 1 frame (image) or reference clip (video). Scales with resolution, frames, and batch.">?</span>
+        </label>
+        <input type="number" id="activation-base" value="1.2" min="0" step="0.1">
+      </div>
+      <p class="field-note" id="gen-arch-note"></p>
+      <input type="hidden" id="ref-width" value="1024">
+      <input type="hidden" id="ref-height" value="1024">
+      <input type="hidden" id="ref-frames" value="1">
+    </section>
+
     <!-- KV Cache & Offloading -->
-    <section class="card">
+    <section class="card llm-only" id="inference-section">
       <h2>Inference</h2>
       <div class="form-group">
         <label for="kv-quant">KV Cache Quantization</label>
@@ -233,6 +289,68 @@
       </div>
     </section>
 
+    <!-- Image / Video generation settings -->
+    <section class="card gen-only" id="gen-inference-section">
+      <h2>Generation</h2>
+      <div class="form-group">
+        <label for="gen-precision">Weight Precision
+          <span class="info" title="Scales DiT/UNet and text-encoder weights only. Activations stay near fp16/bf16.">?</span>
+        </label>
+        <select id="gen-precision">
+          <option value="fp16">fp16 / bf16</option>
+          <option value="fp8">fp8</option>
+          <option value="q8">q8 / GGUF Q8</option>
+          <option value="q4" selected>q4 / GGUF Q4</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gen-width">Width</label>
+          <input type="number" id="gen-width" value="1024" min="64" step="64">
+        </div>
+        <div class="form-group">
+          <label for="gen-height">Height</label>
+          <input type="number" id="gen-height" value="1024" min="64" step="64">
+        </div>
+      </div>
+      <div class="quick-btns image-only" id="image-res-presets">
+        <button type="button" data-size="512">512</button>
+        <button type="button" data-size="768">768</button>
+        <button type="button" data-size="1024" class="active">1024</button>
+        <button type="button" data-size="1536">1536</button>
+      </div>
+      <div class="quick-btns video-only" id="video-res-presets">
+        <button type="button" data-width="832" data-height="480">480p</button>
+        <button type="button" data-width="1280" data-height="720" class="active">720p</button>
+        <button type="button" data-width="1920" data-height="1080">1080p</button>
+      </div>
+      <div class="form-row video-only" id="video-timing">
+        <div class="form-group">
+          <label for="gen-duration">Duration (s)</label>
+          <input type="number" id="gen-duration" value="5" min="0.5" step="0.5">
+        </div>
+        <div class="form-group">
+          <label for="gen-fps">FPS</label>
+          <input type="number" id="gen-fps" value="24" min="1" step="1">
+        </div>
+      </div>
+      <p class="field-note video-only" id="frames-note"></p>
+      <div class="form-group">
+        <label for="gen-batch">Batch Size</label>
+        <input type="number" id="gen-batch" value="1" min="1" step="1">
+      </div>
+      <label class="check-label">
+        <input type="checkbox" id="te-on-gpu">
+        Text encoder on GPU
+        <span class="info" title="Keep CLIP/T5/UMT5 in VRAM. Offloading it to system RAM is the usual setup for Flux, SD3, and video models.">?</span>
+      </label>
+      <label class="check-label">
+        <input type="checkbox" id="vae-tiling" checked>
+        VAE tiling
+        <span class="info" title="Decodes latents in tiles to cut the VAE decode VRAM spike. Common in ComfyUI low-VRAM workflows.">?</span>
+      </label>
+    </section>
+
     <!-- Advanced -->
     <section class="card collapsible">
       <h2 class="collapsible-toggle">Advanced <span class="caret">&#9654;</span></h2>
@@ -246,12 +364,12 @@
           </div>
           <div class="form-group">
             <label for="ram-overhead">RAM Overhead (MB)
-              <span class="info" title="Extra RAM for the llama.cpp process and OS">?</span>
+              <span class="info" title="Extra RAM for the process and OS">?</span>
             </label>
             <input type="number" id="ram-overhead" value="500" min="0" step="50">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group llm-only">
           <label for="desired-context">Desired Context (reverse mode)
             <span class="info" title="Enter a target context size to see if it fits and how much memory it needs">?</span>
           </label>
@@ -265,11 +383,11 @@
   <!-- ===== RESULTS COLUMN ===== -->
   <div class="results-col">
 
-    <!-- Max Context Result -->
+    <!-- Hero Result -->
     <section class="card result-hero">
-      <h2>Maximum Context Size</h2>
+      <h2 id="hero-title">Maximum Context Size</h2>
       <div class="big-number" id="max-context">--</div>
-      <div class="tokens-label">tokens</div>
+      <div class="tokens-label" id="hero-unit">tokens</div>
       <p class="note" id="context-note"></p>
     </section>
 
@@ -282,13 +400,15 @@
         <div class="mem-bar" id="vram-bar">
           <div class="seg seg-model" id="vram-seg-model"></div>
           <div class="seg seg-kv" id="vram-seg-kv"></div>
+          <div class="seg seg-aux" id="vram-seg-aux"></div>
           <div class="seg seg-overhead" id="vram-seg-overhead"></div>
         </div>
         <div class="mem-bar-total" id="vram-bar-label"></div>
       </div>
       <table class="mem-table">
         <tr><td><span class="dot dot-model"></span>Model Weights</td><td id="vram-model-val">--</td></tr>
-        <tr><td><span class="dot dot-kv"></span>KV Cache</td><td id="vram-kv-val">--</td></tr>
+        <tr><td><span class="dot dot-kv"></span><span id="vram-mid-label">KV Cache</span></td><td id="vram-kv-val">--</td></tr>
+        <tr id="vram-aux-row" hidden><td><span class="dot dot-aux"></span>Text Encoder + VAE</td><td id="vram-aux-val">--</td></tr>
         <tr><td><span class="dot dot-overhead"></span>Overhead</td><td id="vram-overhead-val">--</td></tr>
         <tr class="row-total"><td>Total Used</td><td id="vram-total-val">--</td></tr>
         <tr class="row-free"><td>Free</td><td id="vram-free-val">--</td></tr>
@@ -299,13 +419,15 @@
         <div class="mem-bar" id="ram-bar">
           <div class="seg seg-model" id="ram-seg-model"></div>
           <div class="seg seg-kv" id="ram-seg-kv"></div>
+          <div class="seg seg-aux" id="ram-seg-aux"></div>
           <div class="seg seg-overhead" id="ram-seg-overhead"></div>
         </div>
         <div class="mem-bar-total" id="ram-bar-label"></div>
       </div>
       <table class="mem-table">
         <tr><td><span class="dot dot-model"></span>Model Weights</td><td id="ram-model-val">--</td></tr>
-        <tr><td><span class="dot dot-kv"></span>KV Cache</td><td id="ram-kv-val">--</td></tr>
+        <tr><td><span class="dot dot-kv"></span><span id="ram-mid-label">KV Cache</span></td><td id="ram-kv-val">--</td></tr>
+        <tr id="ram-aux-row" hidden><td><span class="dot dot-aux"></span>Text Encoder + VAE</td><td id="ram-aux-val">--</td></tr>
         <tr><td><span class="dot dot-overhead"></span>Overhead</td><td id="ram-overhead-val">--</td></tr>
         <tr class="row-total"><td>Total Used</td><td id="ram-total-val">--</td></tr>
         <tr class="row-free"><td>Free</td><td id="ram-free-val">--</td></tr>
@@ -314,12 +436,12 @@
 
     <!-- Reverse Mode Result -->
     <section class="card" id="reverse-section" hidden>
-      <h2>Reverse Mode</h2>
+      <h2 id="reverse-title">Reverse Mode</h2>
       <div id="reverse-result"></div>
     </section>
 
     <!-- llama.cpp Command -->
-    <section class="card">
+    <section class="card llm-only" id="command-section">
       <h2>llama.cpp Command</h2>
       <div class="command-wrap">
         <code id="llama-command">--</code>
@@ -327,11 +449,16 @@
       </div>
     </section>
 
+    <section class="card gen-only" id="gen-notes-section">
+      <h2>Notes</h2>
+      <p class="note" id="gen-fit-note"></p>
+    </section>
+
   </div>
 </main>
 
 <footer>
-  <p>Calculations are estimates. Actual memory usage varies with llama.cpp version, batch size, and system configuration.</p>
+  <p id="footer-note">Calculations are estimates. Actual memory usage varies with llama.cpp version, batch size, and system configuration.</p>
 </footer>
 
 <script src="app.js"></script>

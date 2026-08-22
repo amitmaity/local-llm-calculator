@@ -7,7 +7,7 @@ Live app: [amitmaity.github.io/local-llm-calculator](https://amitmaity.github.io
 ## Features
 - Calculates maximum usable context size from VRAM and RAM constraints.
 - Supports dense, MoE, hybrid-dense, hybrid-MoE, sliding-dense, and sliding-MoE model layouts.
-- Includes LLM presets for Llama, Qwen 2.5, Qwen3, Qwen 3.5, Qwen 3.6, Qwen3-Coder-Next, Mixtral, Gemma 2, Gemma 3, Gemma 4, Muse Glimmer, Ministral 3, Falcon 3, Nanbeige4.1, OLMo 2, LFM2, TwiL-LM, Granite SWASH, SmolLM, TinyLlama, Phi-3, Phi-4, Command-R, and DeepSeek.
+- Includes LLM presets for Llama, Qwen 2.5, Qwen3, Qwen 3.5, Qwen 3.6, Qwen 3.8, Qwen3-Coder-Next, Mixtral, Gemma 2, Gemma 3, Gemma 4, Muse Glimmer, Ministral 3, Falcon 3, Nanbeige4.1, OLMo 2, LFM2, TwiL-LM, Granite SWASH, SmolLM, TinyLlama, Phi-3, Phi-4, Command-R, and DeepSeek.
 - Image generation VRAM estimates with presets for SD 1.5, SDXL, SD 3.5, FLUX.1 Schnell/Dev, and Qwen-Image.
 - Video generation VRAM estimates with presets for Wan 2.1/2.2, HunyuanVideo, LTX-Video, and CogVideoX.
 - Handles `llama.cpp` style GPU layer offloading with `-ngl`.

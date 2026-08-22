@@ -76,7 +76,7 @@ const MODEL_PRESETS = [
     ],
   },
   {
-    group: 'Hybrid Dense (Qwen 3.5/3.6)',
+    group: 'Hybrid Dense (Qwen 3.5/3.6/3.8)',
     models: [
       { id: 'qwen35-0.8b', name: 'Qwen3.5 0.8B',  params: 0.8, type: 'hybrid-dense', layers: 24, kvHeads: 2, headDim: 256, defaultSize: 0.6,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 16, linearValueDim: 128 },
       { id: 'qwen35-2b',   name: 'Qwen3.5 2B',    params: 2,   type: 'hybrid-dense', layers: 24, kvHeads: 2, headDim: 256, defaultSize: 1.5,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 16, linearValueDim: 128 },
@@ -84,6 +84,7 @@ const MODEL_PRESETS = [
       { id: 'qwen35-9b',   name: 'Qwen3.5 9B',    params: 9,   type: 'hybrid-dense', layers: 32, kvHeads: 4, headDim: 256, defaultSize: 5.5,  fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 32, linearValueDim: 128 },
       { id: 'qwen35-27b',  name: 'Qwen3.5 27B',   params: 27,  type: 'hybrid-dense', layers: 64, kvHeads: 4, headDim: 256, defaultSize: 16,   fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 48, linearValueDim: 128 },
       { id: 'qwen36-27b',  name: 'Qwen3.6 27B',   params: 27,  type: 'hybrid-dense', layers: 64, kvHeads: 4, headDim: 256, defaultSize: 16,   fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 48, linearValueDim: 128 },
+      { id: 'qwen38-27b',  name: 'Qwen3.8 27B',   params: 27,  type: 'hybrid-dense', layers: 64, kvHeads: 4, headDim: 256, defaultSize: 16,   fullAttnInterval: 4, linearKeyDim: 128, linearValueHeads: 48, linearValueDim: 128 },
     ],
   },
   {
